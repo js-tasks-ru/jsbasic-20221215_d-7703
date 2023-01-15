@@ -1,5 +1,4 @@
 function initCarousel() {
-  
   const carousel = document.querySelector('.carousel'); // основная обретка карусели
   const btnArrowRight = document.querySelector('.carousel__arrow_right'); // стрелка вправо
   const btnArrowLeft = document.querySelector('.carousel__arrow_left'); // стрелка влево
@@ -60,5 +59,4 @@ function initCarousel() {
     if (arrowR) slider.slideR();
     if (arrowL) slider.slideL();
   });
-  
 }
