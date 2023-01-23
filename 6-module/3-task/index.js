@@ -38,13 +38,12 @@ export default class Carousel {
   }
 
   slideMove() {
-    document.addEventListener('DOMContentLoaded', () => {
-      const carousel = document.querySelector('.carousel'); 
-      const btnArrowRight = document.querySelector('.carousel__arrow_right'); 
-      const btnArrowLeft = document.querySelector('.carousel__arrow_left'); 
-      const carouselInner = document.querySelector('.carousel__inner'); 
-      let innerWidth = carouselInner.offsetWidth; 
-      let carouselSlides = document.querySelectorAll('.carousel__slide'); 
+      
+      const btnArrowRight = this.elem.querySelector('.carousel__arrow_right'); 
+      const btnArrowLeft = this.elem.querySelector('.carousel__arrow_left'); 
+      const carouselInner = this.elem.querySelector('.carousel__inner'); 
+      
+      let carouselSlides = this.elem.querySelectorAll('.carousel__slide'); 
       let slideClick = 1;
 
       function arrowHide(slide) {
@@ -72,6 +71,7 @@ export default class Carousel {
           if (slideClick === carouselSlides.length) {
             return;
           };
+          let innerWidth = carouselInner.offsetWidth; 
           carouselInner.style.transform = `translateX(-${innerWidth * slideClick}px)`;
           slideClick++;
           arrowHide(slideClick);
@@ -82,46 +82,41 @@ export default class Carousel {
             return;
           };
           slideClick--;
+          let innerWidth = carouselInner.offsetWidth; 
           carouselInner.style.transform = `translateX(${ innerWidth - innerWidth * slideClick}px)`;
           arrowHide(slideClick);
         }
       }
 
-      carousel.addEventListener('click', (event) => {
+      this.elem.addEventListener('click', (event) => {
         let arrowR = event.target.closest('.carousel__arrow_right');
         let arrowL = event.target.closest('.carousel__arrow_left');
       
         if (arrowR) slider.slideR();
         if (arrowL) slider.slideL();
       });
-    });
     
   }
 
   eventListener() {
-    document.addEventListener('DOMContentLoaded', () => {
-      const slideList = document.querySelectorAll('.carousel__slide');
       
-      let productAddEvent = new CustomEvent("product-add", {
-        //detail: ,
-        bubbles: true
-      });
-
       this.elem.addEventListener('product-add', (event) => {
-        console.log('добавил в корзину: ', event.detail);
+        
       });
 
       this.elem.addEventListener('click', (event) => {
         let target = event.target.closest('.carousel__button');
 
         if (target) {
+          let id = target.closest('[data-id]').dataset.id;
+          let productAddEvent = new CustomEvent("product-add", {
+            detail: id,
+            bubbles: true
+          });
+
           this.elem.dispatchEvent(productAddEvent)
         }
       });
-    });
-    
-
-
   }
 }
 
